@@ -1,0 +1,47 @@
+<div class="container-fluid booardlist">
+  <div class="pull-right">
+    <app-dialog (emitText)="addColumn($event)" question="Add new column">
+      <button mat-raised-button color="primary">
+        New List
+      </button>
+    </app-dialog>
+  </div>
+  <div cdkDropListGroup class="row ">
+    <div class="col-sm-3">
+      <div class="d-flex justify-content-between align-items-center p-2 shadow-sm column-header mouse-pointer" (click)="getList(baord.id)"  *ngFor="let baord of boords">
+        <h2 class="m-0  mouse-pointer">{{baord.name}}</h2>
+        <button mat-icon-button class="icon-delete" (click)="onDeleteBoard(baord.id)">
+          <mat-icon style="font-size: 20px;">delete</mat-icon>
+        </button>
+      </div>
+      <app-dialog (emitText)="addTrelloBoard($event)"  [question]="'Add new board'">
+        <button mat-raised-button class="w-100 mb-1 btn-add">+</button>
+      </app-dialog>
+    </div>
+    <div class="col-sm-2 " *ngFor="let listItem of list">
+
+      <!-- Column Title -->
+      <div class="d-flex justify-content-between align-items-center p-2 shadow-sm column-header">
+        <p class="m-0  mouse-pointer">{{listItem.name}}</p>
+        <button mat-icon-button class="icon-delete" (click)="onDeleteColumn(listItem.id)">
+          <mat-icon style="font-size: 20px;">delete</mat-icon>
+        </button>
+      </div>
+
+    
+
+      <!-- Add New Card To Column -->
+      <app-dialog (emitText)="onAddCard($event, listItem.id)" [question]="'Add new card in ' + listItem.name + ' list'">
+        <button mat-raised-button class="w-100 mb-1 btn-add">+</button>
+      </app-dialog>
+      
+      <div class="d-flex justify-content-between align-items-center p-2 shadow-sm column-header mouse-pointer"   *ngFor="let card of listItem.cards">
+        <h2 class="m-0">{{card.name}}</h2>
+        <button mat-icon-button class="icon-delete" (click)="onDeleteBoard(card.id)">
+          <mat-icon style="font-size: 20px;">delete</mat-icon>
+        </button>
+      </div>
+      
+    </div>
+  </div>
+</div>
